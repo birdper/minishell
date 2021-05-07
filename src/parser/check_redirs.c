@@ -32,15 +32,23 @@ static int	check_redir_len(char *file)
 
 static int	check_ambigous(char *file, char **env)
 {
-	if (*file == '$')
+    char    *tmp;
+    int     len;
+
+    tmp = file;
+    len = 0;
+	while (*tmp == '$')
 	{
-		if (pre_parse_env_size(file + 1, env) == 0)
-		{
-			ft_putendl_fd("minishell: ambiguous redirect", 2);
-            free(file);
-			return (1);
-		}
+        tmp++;
+        len += pre_parse_env_size(tmp, env);
+        tmp += env_name_size(tmp);
 	}
+    if (*tmp == 0 && len == 0)
+    {
+        ft_putendl_fd("minishell: ambiguous redirect", 2);
+        free(file);
+        return (1);
+    }
 	return (0);
 }
 

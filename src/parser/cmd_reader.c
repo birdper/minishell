@@ -21,7 +21,7 @@ void	add_symbol(char *buf, int res, t_reader *data)
 	{
 		tmp = data->str;
 		data->len *= 2;
-		data->str = malloc(data->len);
+		data->str = ft_calloc(data->len, 1);
 		ft_strlcpy(data->str, tmp, data->len);
 		free(tmp);
 	}
@@ -33,7 +33,7 @@ void	data_init(t_reader *data, struct termios *term)
 {
 	data->first = 0;
 	data->len = 100;
-	data->str = malloc(data->len);
+	data->str = ft_calloc(data->len, 1);
 	data->backup = ft_strdup("");
 	data->i = 1;
 	data->term = term;
@@ -88,6 +88,7 @@ char	*cmd_reader(t_2list **history, struct termios *term, char ***envp)
 			add_symbol(buf, res, &data);
 		make_backup(&data);
 	}
+		printf("size:%ld buf:%s\n", data.i, data.str);
 	free(data.backup);
 	return (data.str);
 }
