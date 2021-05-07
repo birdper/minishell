@@ -5,6 +5,12 @@ static int32_t	set_fd(t_redirect *redir, int32_t *fd)
 	errno = 0;
 	if (*fd > 0)
 		close(*fd);
+	if (ft_isempty_str(redir->rd_file))
+	{
+		errno = ENOENT;
+		print_err("minishell", NULL, redir->rd_file, strerror(errno));
+		return (1);
+	}
 	if (redir->rd_symbol == input)
 		*fd = open(redir->rd_file, O_RDONLY);
 	else if (redir->rd_symbol == output_append)
@@ -13,7 +19,7 @@ static int32_t	set_fd(t_redirect *redir, int32_t *fd)
 		*fd = open(redir->rd_file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (*fd < 0)
 	{
-		print_err(NULL, "minishell", redir->rd_file, strerror(errno));
+		print_err("minishell", NULL, redir->rd_file, strerror(errno));
 		return (1);
 	}
 	return (0);
