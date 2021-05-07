@@ -1,7 +1,7 @@
 NAME				= minishell
 DEBUG_APP			= debug_minishell
 
-C_FLAG				= -Wall -Werror -Wextra
+C_FLAG				= #-Wall -Werror -Wextra
 DEBUG_FLAG			= -g
 
 DIR_SRC				= src/
@@ -52,6 +52,7 @@ SRC_PARSER		:=	\
 					skip_utils.c			\
 					clear_utils.c			\
 					dbl_lst.c				\
+					check_redirs.c			\
 					intr_signals.c			\
 
 SRC_EXEC		:=	\

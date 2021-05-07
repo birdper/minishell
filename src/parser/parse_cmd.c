@@ -72,7 +72,7 @@ char	**get_cmd_arr(char *line, char **envp[])
 	char	**cmd_arr;
 
 	delete_comments(line);
-	if (pre_parse_validate(line))
+	if (pre_parse_validate(line, *envp))
 	{
 		set_value_by_key("?", "258", *envp);
 		free(line);
