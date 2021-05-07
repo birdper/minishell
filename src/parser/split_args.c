@@ -53,8 +53,6 @@ int	split_arguments(t_list **list, char **cmd_arr, char **env[])
 		data->have_pipe = get_pipe(parsed_cmd);
 		data->redirects = get_redirects(parsed_cmd);
 		delete_redirection(parsed_cmd);
-		if (validate_redirects(data, parsed_cmd, env) < 0)
-			return (-1);
 		parse_get_cmd(parsed_cmd, data);
 		parse_get_args(parsed_cmd, &args_holder, &data);
 		ft_lstadd_back(list, ft_lstnew(data));

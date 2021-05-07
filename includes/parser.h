@@ -56,11 +56,12 @@ int				pre_parse_copy_quotes(char **line, char *str,
 					char **env, int *i);
 int				pre_parce_skip_env(char **line, int *count, char **env);
 int				pre_parce_skip_env(char **line, int *count, char **env);
-int				pre_parse_validate(char *line);
+int				pre_parse_validate(char *line, char **envp);
 int				pre_parse_skip_quotes(char **line, int *count, char **env);
 int				pre_parse_env_size(char *line, char **env);
 int				pre_parse_size(char *line, char **env);
 char			*pre_parse(char *line, char **env, int size);
+int				check_redirs(char *line, char **env);
 
 int				is_printable_env(char c);
 int				is_valid_env(char *line);
