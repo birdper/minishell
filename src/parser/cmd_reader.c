@@ -88,7 +88,6 @@ char	*cmd_reader(t_2list **history, struct termios *term, char ***envp)
 			add_symbol(buf, res, &data);
 		make_backup(&data);
 	}
-		printf("size:%ld buf:%s\n", data.i, data.str);
 	free(data.backup);
 	return (data.str);
 }
