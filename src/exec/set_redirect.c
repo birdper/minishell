@@ -2,14 +2,14 @@
 
 static int32_t	set_fd(t_redirect *redir, int32_t *fd)
 {
-	errno = 0;
 	if (*fd > 0)
 		close(*fd);
+	errno = 0;
 	if (ft_isempty_str(redir->rd_file))
 	{
 		errno = ENOENT;
 		print_err("minishell", NULL, redir->rd_file, strerror(errno));
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	if (redir->rd_symbol == input)
 		*fd = open(redir->rd_file, O_RDONLY);
@@ -20,9 +20,9 @@ static int32_t	set_fd(t_redirect *redir, int32_t *fd)
 	if (*fd < 0)
 	{
 		print_err("minishell", NULL, redir->rd_file, strerror(errno));
-		return (1);
+		return (EXIT_FAILURE);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	find_redirections(t_list *list_redirections, t_redir_fds *redir_fds)
@@ -40,10 +40,10 @@ int	find_redirections(t_list *list_redirections, t_redir_fds *redir_fds)
 		if (redir->rd_symbol == input)
 			fd = &(redir_fds->redir_in);
 		if (set_fd(redir, fd))
-			return (1);
+			return (EXIT_FAILURE);
 		list_redirections = list_redirections->next;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	set_redirections(t_redir_fds *redir_fds)

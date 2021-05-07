@@ -30,25 +30,25 @@ static int	check_redir_len(char *file)
 	return (0);
 }
 
-static int	check_ambigous(char *file, char **env)
+static int	check_ambigous(char *filename, char **env)
 {
-    char    *tmp;
-    int     len;
+	char	*tmp;
+	int		len;
 
-    tmp = file;
-    len = 0;
+	tmp = filename;
+	len = 0;
 	while (*tmp == '$')
 	{
-        tmp++;
-        len += pre_parse_env_size(tmp, env);
-        tmp += env_name_size(tmp);
+		tmp++;
+		len += pre_parse_env_size(tmp, env);
+		tmp += env_name_size(tmp);
 	}
-    if (*tmp == 0 && len == 0)
-    {
-        ft_putendl_fd("minishell: ambiguous redirect", 2);
-        free(file);
-        return (1);
-    }
+	if (*tmp == 0 && len == 0)
+	{
+		ft_putendl_fd("minishell: ambiguous redirect", 2);
+		free(filename);
+		return (1);
+	}
 	return (0);
 }
 
@@ -59,7 +59,7 @@ static char	*pre_parse_filename(char *str)
 
 	i = 1;
 	filename = (char *)ft_calloc(file_name_size(str) + 1, 1);
-	while (*str && ft_strchr(" ><|;", *str) == 0)
+	while (*str && ft_strchr(" ><|;", *str) == NULL)
 	{
 		ft_strncat(filename, str, ++i, 1);
 		str++;
@@ -69,7 +69,7 @@ static char	*pre_parse_filename(char *str)
 
 int	check_redirs(char *line, char **env)
 {
-	char	*file;
+	char	*filename;
 
 	if (*line == '>' || *line == '<')
 	{
@@ -77,12 +77,12 @@ int	check_redirs(char *line, char **env)
 			line++;
 		line++;
 		skip_spaces(&line);
-		file = pre_parse_filename(line);
-		if (check_redir_len(file))
+		filename = pre_parse_filename(line);
+		if (check_redir_len(filename))
 			return (1);
-		if (check_ambigous(file, env))
+		if (check_ambigous(filename, env))
 			return (1);
-		free(file);
+		free(filename);
 	}
 	return (0);
 }

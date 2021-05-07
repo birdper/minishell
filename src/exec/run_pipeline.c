@@ -74,7 +74,7 @@ static int	pipelining(t_list *list, t_pipeline *pipeline, char **envp)
 		else if (pid < 0)
 		{
 			print_err("minishell", cmd->args[0], NULL, strerror(errno));
-			return (-1);
+			exit(1);
 		}
 		else
 		{
@@ -102,8 +102,11 @@ int	run_pipeline(t_list *list_commands, char **envp, int size)
 	{
 		wait(&stt);
 		if (WIFSIGNALED(stt))
-			status = WTERMSIG(stt) + 128;
-		else if (WIFEXITED(stt))
+		{
+			if (WTERMSIG(stt) != 13)
+				status = WTERMSIG(stt) + 128;
+		}
+		if (WIFEXITED(stt))
 			status = WEXITSTATUS(stt);
 	}
 	return (status);

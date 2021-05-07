@@ -1,7 +1,7 @@
 NAME				= minishell
 DEBUG_APP			= debug_minishell
 
-C_FLAG				= #-Wall -Werror -Wextra
+C_FLAG				= -Wall -Werror -Wextra
 DEBUG_FLAG			= -g
 
 DIR_SRC				= src/
@@ -105,7 +105,7 @@ SRC					:= $(addprefix $(DIR_SRC), $(SRC))
 SRC_PARSER			:= $(addprefix $(DIR_SRC_PARSER), $(SRC_PARSER))
 SRC_EXEC			:= $(addprefix $(DIR_SRC_EXEC), $(SRC_EXEC))
 SRC_SUBSHELL		:= $(addprefix $(DIR_SRC_SUBSHELL), $(SRC_SUBSHELL))
-#SRC					+= $(addprefix $(DIR_SRC_EXEC), $(SRC))
+
 OBJ					:= $(addprefix $(DIR_OBJ), $(OBJ))
 OBJ_PARSER			:= $(addprefix $(DIR_OBJ), $(OBJ_PARSER))
 OBJ_EXEC			:= $(addprefix $(DIR_OBJ), $(OBJ_EXEC))
@@ -125,11 +125,9 @@ $(DIR_OBJ)%.o:		$(DIR_SRC_EXEC)%.c $(INCLUDES)/$(HEADERS)
 $(DIR_OBJ)%.o:		$(DIR_SRC_SUBSHELL)%.c $(INCLUDES)/$(HEADERS)
 	gcc $(C_FLAG) -c $< -o $@ -I$(INCLUDES)
 
-#$(DIR_OBJ)%.o:		$(DIR_SRC_EXEC)%.c $(INCLUDES)/$(HEADERS)
-#	gcc $(C_FLAG) -c $< -o $@ -I$(INCLUDES)
-
 $(DIR_DEB_OBJ)%.o:	$(DIR_SRC)%.c $(INCLUDES)/$(HEADERS)
 	@gcc -g -c $< -o $@ -I$(INCLUDES)
+
 
 
 all:			$(LIBFT) $(NAME)
