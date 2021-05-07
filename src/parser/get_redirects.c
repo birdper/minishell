@@ -69,12 +69,15 @@ char	*get_file_name(char *str)
 	int		i;
 
 	i = 1;
+	printf("size:%d\n", file_name_size(str));
 	filename = (char *)ft_calloc(file_name_size(str) + 1, 1);
 	while (*str && *str != ' ' && *str != '>' && *str != '<'
 		&& *str != '|' && *str != ';')
 	{
 		if (add_spec_symbol(&str, filename, &i))
 			continue ;
+		if (*str == 0)
+			break ;
 		ft_strncat(filename, str, ++i, 1);
 		str++;
 	}
